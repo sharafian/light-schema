@@ -1,0 +1,5 @@
+{
+  "first_name": "string",
+  "middle_name": "optional string",
+  "last_name": "string"
+}
