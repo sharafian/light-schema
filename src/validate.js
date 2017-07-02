@@ -6,8 +6,6 @@ function _validateReq (req, value, stack) {
   let i, len = parts.length
 
   for (i = 0; i < len; ++i) {
-    // TODO: error messages
-    // TODO: switch to individual functions
     if (parts[i] === 'optional') {
       if (!value) return
       continue
@@ -22,10 +20,8 @@ function _validateReq (req, value, stack) {
 }
 
 function _validate (schema, object, stack) {
-  // TODO: better error messages
-
   if (!schema) {
-    throw new Error('error!')
+    throw new Error(`Error: no schema rules for '${stack}'`)
   }
 
   if (typeof schema === 'string') {
@@ -34,7 +30,8 @@ function _validate (schema, object, stack) {
   }
 
   if (typeof object !== 'object' || typeof schema !== 'object') {
-    throw new Error('error')
+    throw new Error(`Both value and schema must be objects.` +
+      ` Value ${object} cannot be validated with schema ${schema}`)
   }
 
   const fields = Object.keys(Object.assign({}, object, schema))
@@ -44,6 +41,7 @@ function _validate (schema, object, stack) {
 }
 
 function validate (schema, object) {
+  if (!schema) throw new Error('missing schema')
   return _validate(schema, object, 'Object')
 }
 
